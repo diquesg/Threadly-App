@@ -4,14 +4,15 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { CommentsModule } from './comments/comments.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { backEnvironment } from './environment';
 
 @Module({
   imports: [
-    UsersModule, 
+    UsersModule,
     CommentsModule,
-    MongooseModule.forRoot('mongodb+srv://threads_user:DDmEnTR0dJjbcRJn@cluster0.1o6pe.mongodb.net/threads?retryWrites=true&w=majority&appName=Cluster0')
+    MongooseModule.forRoot(backEnvironment.DataBaseUrl)
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

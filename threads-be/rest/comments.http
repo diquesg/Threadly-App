@@ -10,7 +10,7 @@ POST http://localhost:3000/comments HTTP/1.1
 content-type: application/json
 
 {
-    "text": "i'm a second nested comment",
-    "userId": "679bd864e9e1a758298cd73e",
-    "parentId": "679bdf205c3d509ae270e05c"
+    "text": "First comment",
+    "userId": "",
+    "parentId": ""
 }

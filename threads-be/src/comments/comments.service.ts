@@ -16,7 +16,10 @@ export class CommentsService {
       user: createCommentDto.userId,
     });
     return createdComment.then((doc) => {
-      return doc.populate(['user', 'parent']);
+      return doc.populate([
+        { path: 'user', select: 'name avatarUrl' },
+        { path: 'parent', populate: { path: 'user', select: 'name avatarUrl' } }
+      ]);
     });
   }
 
@@ -27,13 +30,19 @@ export class CommentsService {
   getTopLevelComments() {
     return this.commentModel.find({
       parent: null
-    }).populate(['user', 'parent']).sort({ createdAt: -1 }).exec();
+    }).populate({ path: 'user', select: 'name avatarUrl' })
+      .populate({ path: 'parent', populate: { path: 'user', select: 'name avatarUrl' } }).sort({ createdAt: -1 }).exec();
   }
 
   getCommentsByParentId(parentId: string) {
-    return this.commentModel.find({
-      parent: parentId
-    }).populate(['user', 'parent']).sort({ createdAt: -1 }).exec();
+    return this.commentModel.find({ parent: parentId })
+      .populate({ path: 'user', select: 'name avatarUrl' })
+      .populate({
+        path: 'parent',
+        populate: { path: 'user', select: 'name avatarUrl' }
+      })
+      .sort({ createdAt: -1 })
+      .exec();
   }
 
   findOne(id: number) {

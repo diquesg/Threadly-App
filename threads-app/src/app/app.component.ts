@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core'; // Adicione OnInit
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { UserService } from './services/user.service';
 import { HttpClient } from '@angular/common/http';
@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
   userService = inject(UserService);
 
   ngOnInit(): void {
-    // Tenta recuperar o usuário armazenado
     const user = this.userService.getUserFromStorage();
 
     if (!user) {
@@ -40,17 +39,14 @@ export class AppComponent implements OnInit {
     }
   }
 
-  // Faz a requisição para obter um nome de usuário aleatório
   getRandomUserResponse() {
     return this.http.get<RandomUserResponse>(environment.randomUserApiUrl);
   }
 
-  // Gera a URL do avatar usando o nome (seed)
   getRandomIconResponse(username: string): string {
     return `${environment.randomIconApiUrl}${encodeURIComponent(username)}`;
   }
 
-  // Função que gera o usuário aleatório
   async createRandomUser(): Promise<{ username: string; avatarUrl: string }> {
     return new Promise((resolve, reject) => {
       this.getRandomUserResponse().subscribe({

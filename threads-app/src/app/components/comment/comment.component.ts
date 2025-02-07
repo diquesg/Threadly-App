@@ -4,10 +4,11 @@ import { CreateCommentComponent } from "../create-comment/create-comment.compone
 import { Comment } from '../../interfaces/comment.interface';
 import { CommentService } from '../../services/comment.service';
 import { UserService } from '../../services/user.service';
+import { RelativeTimePipe } from './relative-time-pipe';
 
 @Component({
   selector: 'app-comment',
-  imports: [NgIf, CommonModule, CreateCommentComponent],
+  imports: [NgIf, CommonModule, CreateCommentComponent, RelativeTimePipe],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss'
 })
@@ -32,9 +33,13 @@ export class CommentComponent {
   }
 
   getNestedStyles(): { [key: string]: string } {
-    const maxWidth = 100; // Largura máxima inicial (%)
-    const widthReduction = 2; // Redução de largura por nível
-    const marginStep = 6; // Margem por nível (px)
+    const maxWidth = 100;
+    const widthReduction = 2;
+    const marginStep = 6;
+
+
+    const createdAt = new Date(this.comment.createdAt);
+    console.log('Dia:', createdAt.getDate());
 
     const width = Math.max(maxWidth - this.nestingLevel * widthReduction, 60);
     const margin = this.nestingLevel * marginStep;
@@ -60,8 +65,9 @@ export class CommentComponent {
     if (this.isNestedComment()) {
       return this.comment.parent?.user.name;
     }
-    return null
+    return null;
   }
+
 
   isParentComment() {
     if (!this.comment.parent) {

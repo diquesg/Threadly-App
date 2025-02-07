@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core'; // Adicione OnInit
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { UserService } from './services/user.service';
 import { HttpClient } from '@angular/common/http';
+import { environment } from './environment';
 
 interface RandomUserResponse {
   usernames: string[];
@@ -35,7 +36,7 @@ export class AppComponent implements OnInit {
   }
 
   getRandomUserResponse() {
-    return this.http.get<RandomUserResponse>('https://usernameapiv1.vercel.app/api/random-usernames');
+    return this.http.get<RandomUserResponse>(environment.randomUserApiUrl);
   }
 
   async getRandomUsername(): Promise<string> {

@@ -10,16 +10,17 @@ export class UserService {
   localStorageKey = 'threads_user';
   http = inject(HttpClient);
 
-  createUser(name: string) {
+  createUser(name: string, avatarUrl: string) {
     return this.http.post<User>(`${environment.apiBaseUrl}/users`, {
       name,
+      avatarUrl
     });
   }
 
   saveUserToStorage(user: User) {
     localStorage.setItem(this.localStorageKey, JSON.stringify(user));
   }
-  getUserFromStorage() {
+  getUserFromStorage(): User | null {
     const user = localStorage.getItem(this.localStorageKey);
     return user ? JSON.parse(user) as User : null;
   }

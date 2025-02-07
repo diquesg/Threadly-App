@@ -19,32 +19,50 @@ export class AppComponent implements OnInit {
   title = 'threads-app';
   userService = inject(UserService);
 
-  constructor() {
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
+    // Tenta recuperar o usuário armazenado
     const user = this.userService.getUserFromStorage();
 
     if (!user) {
-      this.getRandomUsername().then((username) => {
-        this.userService.createUser(username).subscribe(user => {
-          console.log('user created:', user);
-          this.userService.saveUserToStorage(user);
+      this.createRandomUser().then(({ username, avatarUrl }) => {
+        this.userService.createUser(username, avatarUrl).subscribe({
+          next: (newUser) => {
+            console.log('Usuário criado:', newUser);
+            this.userService.saveUserToStorage(newUser);
+          },
+          error: (error) => {
+            console.error('Erro ao criar usuário no backend:', error);
+          }
         });
+      }).catch(error => {
+        console.error('Erro ao gerar usuário aleatório:', error);
       });
     }
   }
 
+  // Faz a requisição para obter um nome de usuário aleatório
   getRandomUserResponse() {
     return this.http.get<RandomUserResponse>(environment.randomUserApiUrl);
   }
 
-  async getRandomUsername(): Promise<string> {
+  // Gera a URL do avatar usando o nome (seed)
+  getRandomIconResponse(username: string): string {
+    return `${environment.randomIconApiUrl}${encodeURIComponent(username)}`;
+  }
+
+  // Função que gera o usuário aleatório
+  async createRandomUser(): Promise<{ username: string; avatarUrl: string }> {
     return new Promise((resolve, reject) => {
       this.getRandomUserResponse().subscribe({
         next: (response) => {
           const username = response.usernames[0];
-          resolve(username);
+          if (!username) {
+            return reject('Nenhum nome retornado pela API');
+          }
+          const avatarUrl = this.getRandomIconResponse(username);
+          console.log('Nome gerado:', username);
+          console.log('Avatar URL gerado:', avatarUrl);
+          resolve({ username, avatarUrl });
         },
         error: (err) => {
           reject(err);

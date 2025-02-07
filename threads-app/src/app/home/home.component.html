@@ -1,6 +1,6 @@
-<section class="max-w-2xl mx-auto shadow lg">
+<section class="max-w-xl mx-auto shadow lg">
     <app-create-comment placeholder="What's happening?..." (formSubmitted)="createComment($event)"></app-create-comment>
 </section>
-<section class="max-w-2xl mx-auto shadow lg border border-gray-500">
+<section class="max-w-xl mx-auto shadow lg border border-gray-500">
     <app-comment [comment]="comment" *ngFor="let comment of comments(); trackBy: commentTrackBy"></app-comment>
 </section>

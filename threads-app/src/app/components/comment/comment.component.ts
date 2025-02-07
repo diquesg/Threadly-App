@@ -38,7 +38,7 @@ export class CommentComponent {
   }
 
   get getParentName() {
-    console.log('Comment parent:', this.comment.parent);
+    console.log('Comment parent:', this.comment.parent?.user);
     if (this.isNestedComment()) {
       return this.comment.parent?.user.name;
     }

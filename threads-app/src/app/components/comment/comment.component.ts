@@ -13,6 +13,7 @@ import { UserService } from '../../services/user.service';
 })
 export class CommentComponent {
   @Input() comment!: Comment;
+  @Input() nestingLevel = 0;
   isExpanded = signal(false);
   isReplying = signal(false);
   commentService = inject(CommentService)
@@ -30,6 +31,23 @@ export class CommentComponent {
     });
   }
 
+  getNestedStyles(): { [key: string]: string } {
+    const maxWidth = 100; // Largura máxima inicial (%)
+    const widthReduction = 2; // Redução de largura por nível
+    const marginStep = 6; // Margem por nível (px)
+
+    const width = Math.max(maxWidth - this.nestingLevel * widthReduction, 60);
+    const margin = this.nestingLevel * marginStep;
+
+    return {
+      'width': `${width}%`,
+      'margin-left': `${margin}px`,
+      'margin-right': `${margin}px`,
+      'transform-origin': 'center center',
+      'box-sizing': 'border-box'
+    };
+  }
+
   isNestedComment(): boolean {
     if (this.comment.parent) {
       return true
@@ -43,6 +61,13 @@ export class CommentComponent {
       return this.comment.parent?.user.name;
     }
     return null
+  }
+
+  isParentComment() {
+    if (!this.comment.parent) {
+      return true
+    }
+    return false
   }
 
   get hasNestedComment(): boolean {

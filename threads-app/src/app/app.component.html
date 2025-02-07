@@ -1,18 +1,50 @@
 <div class="min-h-screen flex flex-col">
-  <header class="h-16 px-3 bg-black text-white items-center flex justify-between">
-    <span class="text-2xl">Threads</span>
+  <header class="h-16 px-3 bg-black text-white justify-center items-center flex fixed top-0 left-0 right-0 z-10">
+    <img src="./file.svg" class="size-10 ml-1" />
+    <span class="text-2xl">Thread.ly</span>
     <nav>
-      <ul class="flex gap-4">
-        <li routerLinkActive="underline underline-offset-4">
-          <a routerLink="/home">Home</a>
-        </li>
-        <li routerLinkActive="underline underline-offset-4">
-          <a routerLink="/about">About</a>
-        </li>
-      </ul>
+      <!-- Itens de navegação opcionais -->
     </nav>
   </header>
-  <main class="px-3">
-    <router-outlet />
-  </main>
+
+  <div class="flex pt-16 h-screen">
+    <!-- Sidebar Estreito -->
+    <div
+      class="w-75 fixed -left-4 top-16 bottom-0 border-r border-r-gray-400 p-4 flex items-center justify-center text-xl">
+      <ul class="flex flex-col space-y-4 text-center list-none -mt-16">
+        <li routerLinkActive="underline underline-offset-5 font-bold "
+          class="hover:text-gray-500 transition-colors flex group">
+          <button>
+            <a routerLink="/home" class="flex items-center"> <!-- Movido o routerLink para aqui -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-8 mr-2 stroke-[1.5] group-[.font-bold]:stroke-[2]">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+              </svg>
+              Home
+            </a>
+          </button>
+        </li>
+        <li routerLinkActive="underline underline-offset-5 font-bold "
+          class="hover:text-gray-500 transition-colors flex group">
+          <button>
+            <a routerLink="/about" class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                class="size-8 mr-2 stroke-[1.5] group-[.font-bold]:stroke-[2]">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+              </svg>About</a>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Conteúdo Principal Centralizado -->
+    <main class="flex-1 overflow-y-auto"> <!-- 1. Margem para sidebar -->
+      <div class="w-full min-h-[calc(100vh-4rem)] flex flex-col items-center">
+        <!-- 2. Largura máxima maior e centralização -->
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
 </div>

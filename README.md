@@ -147,13 +147,13 @@ deleteComment(commentId: string) {
   });
 }
 ```
-Contribuição
+## Contribuição
 Contribuições são bem-vindas! Se você deseja colaborar, por favor, abra uma issue ou envie um pull request. Certifique-se de seguir as diretrizes de contribuição e teste suas alterações.
 
-Licença
+## Licença
 Este projeto é licenciado sob a MIT License.
 
-Agradecimentos
+## Agradecimentos
 
 Agradecimento à Muhammad Ahsan Ayaz pela ideia inicial do projeto e tutorial passo a passo no youtube: https://www.youtube.com/watch?v=cAj6gzAMNfA
 

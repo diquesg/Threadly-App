@@ -167,4 +167,27 @@ export class CommentComponent {
     }
   }
 
+  toggleLike(): void {
+    const user = this.userService.getUserFromStorage();
+    if (!user) {
+      return;
+    }
+    this.commentService.toggleLike(this.comment._id, user._id).subscribe(
+      (updatedComment) => {
+        this.comment.likes = updatedComment.likes;
+      },
+      (error) => {
+        console.error('Erro ao alternar like:', error);
+      }
+    );
+  }
+
+  isLikedByCurrentUser(): boolean {
+    const user = this.userService.getUserFromStorage();
+    if (!user || !this.comment.likes) {
+      return false;
+    }
+    return this.comment.likes.includes(user._id);
+  }
+
 }

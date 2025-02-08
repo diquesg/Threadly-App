@@ -3,7 +3,8 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { Comment } from './schemas/comment.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class CommentsService {
@@ -56,4 +57,23 @@ export class CommentsService {
   remove(id: string) {
     return this.commentModel.findByIdAndDelete(id).exec();
   }
+
+  async toggleLike(commentId: string, userId: string): Promise<Comment> {
+    const comment = await this.commentModel.findById(commentId);
+    if (!comment) {
+      throw new Error('Comentário não encontrado');
+    }
+
+    // Verifica se o usuário já deu like
+    const userIndex = comment.likes.findIndex((id) => id.toString() === userId);
+    if (userIndex >= 0) {
+      // Remove o like
+      comment.likes.splice(userIndex, 1);
+    } else {
+      // Adiciona o like
+      comment.likes.push(new Types.ObjectId(userId));
+    }
+    return comment.save();
+  }
+
 }

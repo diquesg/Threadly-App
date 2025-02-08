@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../environment';
 import { Comment } from '../interfaces/comment.interface';
+import { Observable } from 'rxjs';
 
 type CreateCommentDto = {
   parentId?: string;
@@ -29,5 +30,12 @@ export class CommentService {
 
   deleteComment(id: string) {
     return this.http.delete(`${environment.apiBaseUrl}/comments/${id}`, { responseType: 'text' });
+  }
+
+  toggleLike(commentId: string, userId: string): Observable<Comment> {
+    return this.http.post<Comment>(
+      `${environment.apiBaseUrl}/comments/${commentId}/toggle-like`,
+      { userId }
+    );
   }
 }

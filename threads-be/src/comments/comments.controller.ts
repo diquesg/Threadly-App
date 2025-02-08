@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query, BadRequestExc
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
+import { Comment } from './schemas/comment.schema';
+import { ToggleLikeDto } from './dto/toggle-like.dto';
 
 @Controller('comments')
 export class CommentsController {
@@ -37,5 +39,13 @@ export class CommentsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.commentsService.remove(id);
+  }
+
+  @Post(':id/toggle-like')
+  async toggleLike(
+    @Param('id') id: string,
+    @Body() toggleLikeDto: ToggleLikeDto,
+  ): Promise<Comment> {
+    return this.commentsService.toggleLike(id, toggleLikeDto.userId);
   }
 }

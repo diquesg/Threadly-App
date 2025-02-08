@@ -1,5 +1,5 @@
 <article
-  class="relative block overflow-hidden border border-neutral-400 rounded-md mb-2 p-4 sm:p-6 lg:p-8 shadow-xl border-l w-full"
+  class="relative block overflow-hidden border border-neutral-400 rounded-md mb-2 p-4 sm:p-6 lg:p-8 shadow-xl border-l max-w-2xl"
   [ngStyle]="getNestedStyles()">
   <div *ngIf="isNestedComment()" class="text-gray-500 text-sm mb-3 -mt-3 flex align-middle">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -12,7 +12,7 @@
     <div class="hidden sm:block sm:shrink-0">
       <div *ngIf="userService.getUserFromStorage() as user">
         <img *ngIf="comment.user.avatarUrl" [src]="comment.user.avatarUrl" alt="Avatar do usuário"
-          class="size-13 border rounded-full border-gray-500">
+          class="size-13 border-2 rounded-full border-gray-900">
       </div>
 
 

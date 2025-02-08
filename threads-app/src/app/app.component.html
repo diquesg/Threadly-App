@@ -3,19 +3,17 @@
     <img src="./file.svg" class="size-10 ml-1" />
     <span class="text-2xl">Thread.ly</span>
     <nav>
-      <!-- Itens de navegação opcionais -->
     </nav>
   </header>
 
   <div class="flex pt-16 h-screen">
-    <!-- Sidebar Estreito -->
     <div
-      class="w-75 fixed -left-4 top-16 bottom-0 border-r border-r-gray-400 p-4 flex items-center justify-center text-xl">
-      <ul class="flex flex-col space-y-4 text-center list-none -mt-16">
+      class="w-75 fixed left-83 top-0 bottom-0 border-r border-r-gray-400 p-4 flex items-center justify-center text-xl">
+      <ul class="flex flex-col space-y-4 text-center list-none -mt-16 mr-10">
         <li routerLinkActive="underline underline-offset-5 font-bold "
           class="hover:text-gray-500 transition-colors flex group">
           <button>
-            <a routerLink="/home" class="flex items-center"> <!-- Movido o routerLink para aqui -->
+            <a routerLink="/home" class="flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-8 mr-2 stroke-[1.5] group-[.font-bold]:stroke-[2]">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -39,10 +37,8 @@
       </ul>
     </div>
 
-    <!-- Conteúdo Principal Centralizado -->
-    <main class="flex-1 overflow-y-auto"> <!-- 1. Margem para sidebar -->
+    <main class="flex-1 overflow-y-auto">
       <div class="w-full min-h-[calc(100vh-4rem)] flex flex-col items-center">
-        <!-- 2. Largura máxima maior e centralização -->
         <router-outlet></router-outlet>
       </div>
     </main>

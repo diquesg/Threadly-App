@@ -1,25 +1,25 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-import { User } from 'src/users/schemas/user.schema';
+import { User } from '../../users/schemas/user.schema';
 
 export type CommentDocument = HydratedDocument<Comment>;
 
 @Schema({
-    timestamps: true
-  })
+  timestamps: true
+})
 export class Comment {
   @Prop()
-  text: string;
+  text!: string;
 
   @Prop()
-    likes: number;
+  likes!: number;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User'})
-  user: User;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  user!: User;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Comment'})
-  parent: Comment | null;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: null })
+  parent: Comment | null = null;
 
 }
 

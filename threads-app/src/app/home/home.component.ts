@@ -5,6 +5,7 @@ import { Comment } from '../interfaces/comment.interface';
 import { NgFor } from '@angular/common';
 import { CreateCommentComponent } from '../components/create-comment/create-comment.component';
 import { UserService } from '../services/user.service';
+import { CommentStoreService } from '../services/comment-store.service';
 
 @Component({
   selector: 'app-home',
@@ -13,13 +14,17 @@ import { UserService } from '../services/user.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
+  constructor(private commentStoreService: CommentStoreService) { }
   commentService = inject(CommentService);
   comments = signal<Comment[]>([]);
 
   UserService = inject(UserService);
 
   ngOnInit(): void {
-    this.getComments();
+    this.commentStoreService.comments$.subscribe(comments => {
+      this.comments.set(comments);
+      this.getComments();
+    });
   }
 
   getComments() {

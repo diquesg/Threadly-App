@@ -26,4 +26,8 @@ export class CommentService {
   createComment(comment: CreateCommentDto) {
     return this.http.post<Comment>(`${environment.apiBaseUrl}/comments`, comment)
   }
+
+  deleteComment(id: string) {
+    return this.http.delete(`${environment.apiBaseUrl}/comments/${id}`, { responseType: 'text' });
+  }
 }

@@ -112,12 +112,18 @@ Os endpoints da API estarão disponíveis em: http://localhost:3000
 ## Endpoints da API
 ### Usuários
 POST /users: Cria um novo usuário.
+
 GET /users/:id: Retorna os dados de um usuário pelo ID.
+
 ### Comentários
 GET /comments: Retorna todos os comentários.
+
 GET /comments/:id: Retorna um comentário específico pelo ID.
+
 POST /comments: Cria um novo comentário.
+
 DELETE /comments/:id: Remove um comentário pelo ID.
+
 PUT /comments/:id: Atualiza um comentário pelo ID.
 
 Consulte a documentação do back-end para detalhes sobre payloads e respostas.
@@ -148,9 +154,14 @@ Licença
 Este projeto é licenciado sob a MIT License.
 
 Agradecimentos
+
 Agradecimento à Muhammad Ahsan Ayaz pela ideia inicial do projeto e tutorial passo a passo no youtube: https://www.youtube.com/watch?v=cAj6gzAMNfA
+
 Inspirado por plataformas como Twitter e Threads.
+
 Desenvolvido com Angular, NestJS, MongoDB e Tailwind CSS.
+
 Agradecimentos a todos os colaboradores e à comunidade open-source.
+
 
 

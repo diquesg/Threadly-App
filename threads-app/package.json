@@ -6,8 +6,8 @@
     "start": "ng serve",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build": "ng build --prod && npm run rename-redirects",
-    "rename-redirects": "mv dist/threads-app/browser/redirects.txt dist/threads-app/browser/_redirects"
+    "build": "ng build --configuration production && npm run rename-redirects",
+    "rename-redirects": "node renameRedirects.js"
   },
   "private": true,
   "dependencies": {

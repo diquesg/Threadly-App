@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { UserService } from './services/user.service';
 import { HttpClient } from '@angular/common/http';
-import { environment } from './environment';
+import { environment } from '../environments/environment';
 
 interface RandomUserResponse {
   usernames: string[];

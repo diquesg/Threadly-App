@@ -17,6 +17,8 @@ export class CommentComponent {
   @Input() comment!: Comment;
   @Input() nestingLevel = 0;
 
+  isLoading: boolean = true;
+
   isExpanded = signal(false);
   isReplying = signal(false);
   commentService = inject(CommentService)
@@ -29,9 +31,19 @@ export class CommentComponent {
   }
 
   fetchNestedComments(): void {
-    this.commentService.getComments(this.comment._id).subscribe(comments => {
-      this.nestedComments.set(comments);
-    });
+    // Inicia o loading
+    this.isLoading = true;
+
+    this.commentService.getComments(this.comment._id).subscribe(
+      (comments) => {
+        this.nestedComments.set(comments);
+        this.isLoading = false;
+      },
+      (error) => {
+        console.error("Erro ao carregar comentários:", error);
+        this.isLoading = false;
+      }
+    );
   }
 
   getNestedStyles(): { [key: string]: string } {

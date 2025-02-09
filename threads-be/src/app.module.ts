@@ -10,7 +10,7 @@ import { backEnvironment } from './environment';
   imports: [
     UsersModule,
     CommentsModule,
-    MongooseModule.forRoot(backEnvironment.DataBaseUrl)
+    MongooseModule.forRoot(process.env.DataBaseUrl)
   ],
   controllers: [AppController],
   providers: [AppService],

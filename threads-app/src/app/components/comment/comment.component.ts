@@ -5,7 +5,6 @@ import { Comment } from '../../interfaces/comment.interface';
 import { CommentService } from '../../services/comment.service';
 import { UserService } from '../../services/user.service';
 import { RelativeTimePipe } from './relative-time-pipe';
-import { CommentsService } from '../../../../../threads-be/src/comments/comments.service';
 import { CommentStoreService } from '../../services/comment-store.service';
 
 @Component({

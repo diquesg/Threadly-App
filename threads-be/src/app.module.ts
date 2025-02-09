@@ -9,7 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
   imports: [
     UsersModule,
     CommentsModule,
-    MongooseModule.forRoot(process.env.DataBaseUrl)
+    MongooseModule.forRoot(process.env.DataBaseUrl!)
   ],
   controllers: [AppController],
   providers: [AppService],

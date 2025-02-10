@@ -8,7 +8,6 @@ console.log('Tentando renomear o arquivo...');
 console.log('Caminho de origem:', source);
 console.log('Caminho de destino:', destination);
 
-// Verifica se o arquivo existe no caminho de origem
 if (!fs.existsSync(source)) {
     console.error(`Arquivo não encontrado: ${source}`);
     process.exit(1);

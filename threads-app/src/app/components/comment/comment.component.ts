@@ -1,11 +1,10 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, effect, inject, Input, signal, OnInit } from '@angular/core';
+import { Component, effect, inject, Input, signal, OnInit, Output, EventEmitter } from '@angular/core';
 import { CreateCommentComponent } from "../create-comment/create-comment.component";
 import { Comment } from '../../interfaces/comment.interface';
 import { CommentService } from '../../services/comment.service';
 import { UserService } from '../../services/user.service';
 import { RelativeTimePipe } from './relative-time-pipe';
-import { CommentStoreService } from '../../services/comment-store.service';
 
 @Component({
   selector: 'app-comment',
@@ -16,6 +15,8 @@ import { CommentStoreService } from '../../services/comment-store.service';
 export class CommentComponent {
   @Input() comment!: Comment;
   @Input() nestingLevel = 0;
+  @Output() commentDeleted = new EventEmitter<string>();
+  parentComments = signal<Comment[]>([]);
 
   isLoading: boolean = true;
 
@@ -24,14 +25,12 @@ export class CommentComponent {
   commentService = inject(CommentService)
   nestedComments = signal<Comment[]>([]);
   userService = inject(UserService)
-  commentStoreService = inject(CommentStoreService)
 
   ngOnInit(): void {
     this.fetchNestedComments();
   }
 
   fetchNestedComments(): void {
-    // Inicia o loading
     this.isLoading = true;
 
     this.commentService.getComments(this.comment._id).subscribe(
@@ -48,8 +47,8 @@ export class CommentComponent {
 
   getNestedStyles(): { [key: string]: string } {
     const maxWidth = 100;
-    const widthReduction = 2;
-    const marginStep = 6;
+    const widthReduction = 1;
+    const marginStep = 3;
 
 
     const createdAt = new Date(this.comment.createdAt);
@@ -81,6 +80,9 @@ export class CommentComponent {
     return null;
   }
 
+  get refId(): string {
+    return this.comment.parent!._id
+  }
 
   isParentComment() {
     if (!this.comment.parent) {
@@ -88,6 +90,24 @@ export class CommentComponent {
     }
     return false
   }
+
+  scrollTo(event: Event, elementId: string) {
+    event.preventDefault();
+
+    setTimeout(() => {
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        element.classList.add('bg-blue-300', 'transition-colors', 'duration-500');
+
+        setTimeout(() => element.classList.remove('bg-blue-300'), 1500);
+      } else {
+        console.warn(`Elemento com ID ${elementId} não encontrado.`);
+      }
+    }, 0);
+  }
+
 
   get hasNestedComment(): boolean {
     return this.nestedComments().length > 0;
@@ -139,13 +159,11 @@ export class CommentComponent {
     return comment._id;
   }
 
-  // comment.component.ts (dentro do método deleteComment)
   deleteComment(commentId: string) {
     this.commentService.deleteComment(commentId).subscribe({
       next: () => {
         console.log("Deleted comment.");
-        // Atualiza o estado global removendo o comentário
-        this.commentStoreService.removeComment(commentId);
+        this.commentDeleted.emit(commentId); // Emite o evento com o ID do comentário deletado
       },
       error: (error) => {
         console.error("Error trying to delete comment: ", error);
@@ -153,7 +171,18 @@ export class CommentComponent {
     });
   }
 
+  handleCommentDeleted(deletedCommentId: string) {
+    // Remove o comentário deletado da lista de comentários principais
+    this.parentComments.update(comments =>
+      comments.filter(c => c._id !== deletedCommentId)
+    );
+  }
 
+  handleNestedCommentDeleted(deletedCommentId: string) {
+    this.nestedComments.update(comments =>
+      comments.filter(c => c._id !== deletedCommentId)
+    );
+  }
 
   commentIsFromLocalUser() {
     const user = this.userService.getUserFromStorage()

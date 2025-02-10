@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
 import { CommentComponent } from "../components/comment/comment.component";
 import { CommentService } from '../services/comment.service';
 import { Comment } from '../interfaces/comment.interface';
@@ -14,9 +14,12 @@ import { CommentStoreService } from '../services/comment-store.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  constructor(private commentStoreService: CommentStoreService) { }
+  constructor(private commentStoreService: CommentStoreService) {
+    this.loadParentComments();
+  }
   commentService = inject(CommentService);
   comments = signal<Comment[]>([]);
+  @Output() commentDeleted = new EventEmitter<string>();
 
   UserService = inject(UserService);
 
@@ -26,6 +29,19 @@ export class HomeComponent implements OnInit {
       this.getComments();
     });
   }
+
+  loadParentComments() {
+    this.commentService.getComments().subscribe(comments => {
+      this.comments.set(comments);
+    });
+  }
+
+  handleCommentDeleted(deletedCommentId: string) {
+    this.comments.update(comments =>
+      comments.filter(c => c._id !== deletedCommentId)
+    );
+  }
+
 
   getComments() {
     this.commentService.getComments().subscribe((comments) => {
@@ -49,6 +65,8 @@ export class HomeComponent implements OnInit {
       ])
     });
   }
+
+
 
 
   commentTrackBy(_index: number, comment: Comment) {

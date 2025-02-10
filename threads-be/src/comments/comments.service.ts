@@ -64,13 +64,10 @@ export class CommentsService {
       throw new Error('Comentário não encontrado');
     }
 
-    // Verifica se o usuário já deu like
     const userIndex = comment.likes.findIndex((id) => id.toString() === userId);
     if (userIndex >= 0) {
-      // Remove o like
       comment.likes.splice(userIndex, 1);
     } else {
-      // Adiciona o like
       comment.likes.push(new Types.ObjectId(userId));
     }
     return comment.save();

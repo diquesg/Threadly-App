@@ -1,6 +1,6 @@
 # Thread.ly
 
-Thread.ly é uma plataforma web moderna inspirada em redes sociais como Twitter e Threads. O projeto utiliza uma arquitetura full-stack, com um front-end desenvolvido em Angular (usando componentes standalone, signals e Tailwind CSS) e um back-end construído com NestJS e MongoDB. O sistema conta com recursos de comentários aninhados, gerenciamento global de estado e um layout responsivo que se adapta a diferentes tamanhos de tela.
+Thread.ly é uma plataforma web moderna inspirada em redes sociais de micro-blogging. O projeto utiliza uma arquitetura full-stack, com um front-end desenvolvido em Angular (usando componentes standalone, signals e Tailwind CSS) e um back-end construído com NestJS e MongoDB. O sistema conta com recursos de comentários aninhados, gerenciamento global de estado e um layout responsivo que se adapta a diferentes tamanhos de tela.
 
 ## Features
 

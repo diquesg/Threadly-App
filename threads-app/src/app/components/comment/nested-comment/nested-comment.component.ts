@@ -18,7 +18,6 @@ export class NestedCommentComponent implements OnInit {
   @Input() nestingLevel: number = 0;
 
 
-  // Variável para armazenar os comentários aninhados
   nestedComments = signal<Comment[]>([]);
   isLoading: boolean = false;
   isExpanded = signal(false);
@@ -153,7 +152,7 @@ export class NestedCommentComponent implements OnInit {
     this.commentService.deleteComment(commentId).subscribe({
       next: () => {
         console.log("Deleted comment.");
-        this.commentDeleted.emit(commentId); // Emite o evento com o ID do comentário deletado
+        this.commentDeleted.emit(commentId);
       },
       error: (error) => {
         console.error("Error trying to delete comment: ", error);

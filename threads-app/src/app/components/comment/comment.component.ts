@@ -164,7 +164,7 @@ export class CommentComponent {
     this.commentService.deleteComment(commentId).subscribe({
       next: () => {
         console.log("Deleted comment.");
-        this.commentDeleted.emit(commentId); // Emite o evento com o ID do comentário deletado
+        this.commentDeleted.emit(commentId);
       },
       error: (error) => {
         console.error("Error trying to delete comment: ", error);
@@ -173,14 +173,12 @@ export class CommentComponent {
   }
 
   handleCommentDeleted(deletedCommentId: string) {
-    // Remove o comentário deletado da lista de comentários principais
     this.parentComments.update(comments =>
       comments.filter(c => c._id !== deletedCommentId)
     );
   }
 
   handleNestedCommentDeleted(deletedCommentId: string) {
-    // Remove o comentário deletado da lista de comentários aninhados
     this.nestedComments.update(comments =>
       comments.filter(c => c._id !== deletedCommentId)
     );

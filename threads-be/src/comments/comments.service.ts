@@ -11,20 +11,17 @@ export class CommentsService {
   constructor(@InjectModel(Comment.name) private commentModel: Model<Comment>, private readonly commentsGateway: CommentsGateway,) { }
 
   async create(createCommentDto: CreateCommentDto): Promise<Comment> {
-    // Cria o comentário
     const doc = await this.commentModel.create({
       text: createCommentDto.text,
       parent: createCommentDto.parentId || null,
       user: createCommentDto.userId,
     });
 
-    // Popula os campos desejados
     await doc.populate([
       { path: 'user', select: 'name avatarUrl' },
       { path: 'parent', populate: { path: 'user', select: 'name avatarUrl' } },
     ]);
 
-    // Emite o novo comentário via WebSocket para os clientes conectados
     this.commentsGateway.sendNewComment(doc);
 
     return doc;

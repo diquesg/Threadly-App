@@ -1,26 +1,26 @@
 <div role="status" *ngIf="isLoading"
     class="justify-self-center align-middle items-center mt-5 ml-15 mb-5 w-full mt-5 py-5">
-    <div role="status" class="animate-pulse max-w-lg">
+    <div role="status" class="animate-pulse max-w-lg pl-7 pt-5">
         <div class="flex items-center w-full">
-            <div class="w-13 h-13 rounded-full bg-gray-300"></div>
-            <div class="h-2.5 ms-2 bg-gray-300 rounded-full w-35 mb-8 ml-5"></div>
+            <div class="w-11 h-11 rounded-full bg-gray-300"></div>
+            <div class="h-2.5 ms-2 bg-gray-300 rounded-full w-35 mb-8 ml-4"></div>
         </div>
-        <div class="flex items-center w-full pb-3 max-w-[480px] ml-18 -mt-5">
+        <div class="flex items-center w-full pb-3 max-w-[480px] ml-15 -mt-5">
             <div class="h-2 bg-gray-300 rounded-full  w-full"></div>
             <div class="h-2 ms-2 bg-gray-300 rounded-full  w-full"></div>
             <div class="h-2 ms-2 bg-gray-300 rounded-full  w-24"></div>
         </div>
-        <div class="flex items-center w-full pb-3 max-w-[400px] ml-18 ">
+        <div class="flex items-center w-full pb-3 max-w-[400px] ml-15 ">
             <div class="h-2 bg-gray-300 rounded-full  w-full"></div>
             <div class="h-2 ms-2 bg-gray-300 rounded-full  w-80"></div>
             <div class="h-2 ms-2 bg-gray-300 rounded-full  w-full"></div>
         </div>
-        <div class="flex items-center w-full pb-3 max-w-[440px] ml-16 ">
+        <div class="flex items-center w-full pb-3 max-w-[440px] ml-13 ">
             <div class="h-2 ms-2 bg-gray-300 rounded-full  w-32"></div>
             <div class="h-2 ms-2 bg-gray-300 rounded-full  w-24"></div>
             <div class="h-2 ms-2 bg-gray-300 rounded-full  w-full"></div>
         </div>
-        <div class="flex items-center w-full pb-3 max-w-[360px] ml-16 ">
+        <div class="flex items-center w-full pb-3 max-w-[360px] ml-13 ">
             <div class="h-2 ms-2 bg-gray-300 rounded-full  w-full"></div>
             <div class="h-2 ms-2 bg-gray-300 rounded-full  w-80"></div>
             <div class="h-2 ms-2 bg-gray-300 rounded-full  w-full"></div>
@@ -29,15 +29,15 @@
     </div>
 </div>
 
-<article class="nested-comment border-t border-t-gray-200" *ngIf="!isLoading" [class.shadow.md]="isExpanded()">
+<article class="nested-comment border-t border-t-gray-200" *ngIf="!isLoading">
     <div [id]="this.comment._id" class="p-2 sm:p-2 lg:p-3 lg:pl-14">
-        <div class="text-gray-400 text-sm mb-3 -mt-3 flex align-middle pt-5 pb-1">
+        <div class="text-gray-400 text-sm mb-3 -mt-3 flex align-middle pt-5 pb-1 -ml-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
                     d="m16.49 12 3.75 3.75m0 0-3.75 3.75m3.75-3.75H3.74V4.499" />
             </svg>
-            <span class="relative mt-1">Replying to <a href="#" class="hover:underline"
+            <span class="relative mt-1 ml-1">Replying to <a href="#" class="hover:underline"
                     (click)="scrollTo($event, refId)">&#64;{{getParentName}}</a></span>
         </div>
         <div class="sm:flex sm:gap-4">

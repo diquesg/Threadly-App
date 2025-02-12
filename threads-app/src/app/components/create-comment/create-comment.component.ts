@@ -16,7 +16,11 @@ export class CreateCommentComponent {
     event?.preventDefault();
     const form = event.target as HTMLFormElement;
     const textAreaElement = form.elements.namedItem('commentText') as HTMLTextAreaElement;
-    const commentText = textAreaElement.value;
+    const commentText = textAreaElement.value.trim();
+    if (!commentText) {
+      alert("Empty message.")
+      return
+    }
     form.reset();
     console.log({ commentText })
     this.formSubmitted.emit({

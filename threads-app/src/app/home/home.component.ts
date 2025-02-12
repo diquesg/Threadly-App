@@ -33,8 +33,12 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // Subscrição para receber novos comentários em tempo real
     this.websocketService.onNewComment().subscribe((newComment: Comment) => {
-      // Atualize a lista de comentários, por exemplo, adicionando o novo comentário no início
-      this.comments.update(current => [newComment, ...current]);
+      if (!newComment.parent) {
+        // É um comentário de nível superior
+        if (!this.comments().some(c => c._id === newComment._id)) {
+          this.comments.update(current => [newComment, ...current]);
+        }
+      }
     });
 
     // Outras subscrições, se necessário

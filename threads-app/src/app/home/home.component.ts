@@ -5,12 +5,16 @@ import { CommentService } from '../services/comment.service';
 import { UserService } from '../services/user.service';
 import { CommentStoreService } from '../services/comment-store.service';
 import { WebsocketService } from '../services/websocket.service'; // importe o serviço
+import { CommonModule } from '@angular/common';
+import { CreateCommentComponent } from '../components/create-comment/create-comment.component';
+import { CommentComponent } from '../components/comment/comment.component';
 
 @Component({
   selector: 'app-home',
-  imports: [/* seus imports */],
+  imports: [CommonModule, CreateCommentComponent, CommentComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
+
 })
 export class HomeComponent implements OnInit {
   commentService = inject(CommentService);

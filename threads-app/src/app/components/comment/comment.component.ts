@@ -47,8 +47,8 @@ export class CommentComponent {
     this.websocketService.onNewComment().subscribe((newComment: Comment) => {
       if (
         newComment.parent &&
-        newComment.parent._id === this.comment._id &&
-        !this.nestedComments().some(c => c._id === newComment._id)
+        newComment.parent._id.toString() === this.comment._id.toString() &&
+        !this.nestedComments().some(c => c._id.toString() === newComment._id.toString())
       ) {
         this.nestedComments.update(current => [newComment, ...current]);
       }
@@ -152,12 +152,9 @@ export class CommentComponent {
       userId: user._id,
       parentId: this.comment._id
     }).subscribe(createdComment => {
-      this.nestedComments.set([
-        createdComment,
-        ...this.nestedComments()
-      ])
     });
   }
+
 
   commentTrackBy(_index: number, comment: Comment) {
     return comment._id;

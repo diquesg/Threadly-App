@@ -41,10 +41,10 @@ export class CommentComponent {
 
   ngOnInit(): void {
     this.fetchNestedComments();
+    this.isLoading = true;
   }
 
   fetchNestedComments(): void {
-    this.isLoading = true;
 
     this.commentService.getComments(this.comment._id).subscribe(
       (comments) => {
@@ -58,25 +58,7 @@ export class CommentComponent {
     );
   }
 
-  getNestedStyles(): { [key: string]: string } {
-    const maxWidth = 100;
-    const widthReduction = 1;
-    const marginStep = 3;
 
-
-    const createdAt = new Date(this.comment.createdAt);
-
-    const width = Math.max(maxWidth - this.nestingLevel * widthReduction, 60);
-    const margin = this.nestingLevel * marginStep;
-
-    return {
-      'width': `${width}%`,
-      'margin-left': `${margin}px`,
-      'margin-right': `${margin}px`,
-      'transform-origin': 'center center',
-      'box-sizing': 'border-box'
-    };
-  }
 
   isNestedComment(): boolean {
     if (this.comment.parent) {

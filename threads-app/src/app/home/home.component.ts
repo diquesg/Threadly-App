@@ -27,34 +27,28 @@ export class HomeComponent implements OnInit {
   @Output() commentDeleted = new EventEmitter<string>();
 
   constructor() {
-    this.loadParentComments();
+    // Remover loadParentComments() daqui
   }
 
   ngOnInit(): void {
-    // Subscrição para receber novos comentários em tempo real
+    // Carregar comentários iniciais uma única vez
+    this.loadParentComments();
+
+    // Subscrição para novos comentários via WebSocket
     this.websocketService.onNewComment().subscribe((newComment: Comment) => {
-      if (!newComment.parent) {
-        // É um comentário de nível superior
-        if (!this.comments().some(c => c._id === newComment._id)) {
-          this.comments.update(current => [newComment, ...current]);
-        }
+      if (!newComment.parent && !this.comments().some(c => c._id === newComment._id)) {
+        this.comments.update(current => [newComment, ...current]);
       }
     });
 
-    // Outras subscrições, se necessário
+    // Subscrição para atualizações do store
     this.commentStoreService.comments$.subscribe(comments => {
       this.comments.set(comments);
-      this.getComments();
     });
   }
+
 
   loadParentComments() {
-    this.commentService.getComments().subscribe(comments => {
-      this.comments.set(comments);
-    });
-  }
-
-  getComments() {
     this.commentService.getComments().subscribe(comments => {
       this.comments.set(comments);
     });
@@ -69,13 +63,10 @@ export class HomeComponent implements OnInit {
     this.commentService.createComment({
       text,
       userId: user._id,
-    }).subscribe(createdComment => {
-      this.comments.set([
-        createdComment,
-        ...this.comments()
-      ]);
-    });
+    }).subscribe();
   }
+
+
 
   handleCommentDeleted(deletedCommentId: string) {
     this.comments.update(comments =>

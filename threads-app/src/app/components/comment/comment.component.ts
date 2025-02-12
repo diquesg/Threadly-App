@@ -5,10 +5,11 @@ import { Comment } from '../../interfaces/comment.interface';
 import { CommentService } from '../../services/comment.service';
 import { UserService } from '../../services/user.service';
 import { RelativeTimePipe } from './relative-time-pipe';
+import { NestedCommentComponent } from "./nested-comment/nested-comment.component";
 
 @Component({
   selector: 'app-comment',
-  imports: [NgIf, CommonModule, CreateCommentComponent, RelativeTimePipe],
+  imports: [NgIf, CommonModule, CreateCommentComponent, RelativeTimePipe, NestedCommentComponent],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss'
 })
@@ -25,6 +26,18 @@ export class CommentComponent {
   commentService = inject(CommentService)
   nestedComments = signal<Comment[]>([]);
   userService = inject(UserService)
+
+  constructor() {
+    this.loadParentComments();
+  }
+
+  loadParentComments() {
+    this.commentService.getComments().subscribe(comments => {
+      this.parentComments.set(comments);
+    });
+  }
+
+
 
   ngOnInit(): void {
     this.fetchNestedComments();
@@ -71,6 +84,9 @@ export class CommentComponent {
     }
     return false
   }
+
+
+
 
   get getParentName() {
     console.log('Comment parent:', this.comment.parent?.user);
@@ -179,6 +195,7 @@ export class CommentComponent {
   }
 
   handleNestedCommentDeleted(deletedCommentId: string) {
+    // Remove o comentário deletado da lista de comentários aninhados
     this.nestedComments.update(comments =>
       comments.filter(c => c._id !== deletedCommentId)
     );

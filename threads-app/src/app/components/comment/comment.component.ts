@@ -6,6 +6,7 @@ import { CommentService } from '../../services/comment.service';
 import { UserService } from '../../services/user.service';
 import { RelativeTimePipe } from './relative-time-pipe';
 import { NestedCommentComponent } from "./nested-comment/nested-comment.component";
+import { WebsocketService } from '../../services/websocket.service';
 
 @Component({
   selector: 'app-comment',
@@ -26,6 +27,7 @@ export class CommentComponent {
   commentService = inject(CommentService)
   nestedComments = signal<Comment[]>([]);
   userService = inject(UserService)
+  websocketService = inject(WebsocketService);
 
   constructor() {
     this.loadParentComments();
@@ -41,24 +43,31 @@ export class CommentComponent {
 
   ngOnInit(): void {
     this.fetchNestedComments();
-    this.isLoading = true;
+
+    this.websocketService.onNewComment().subscribe((newComment: Comment) => {
+      if (
+        newComment.parent &&
+        newComment.parent._id === this.comment._id &&
+        !this.nestedComments().some(c => c._id === newComment._id)
+      ) {
+        this.nestedComments.update(current => [newComment, ...current]);
+      }
+    });
   }
 
   fetchNestedComments(): void {
-
+    this.isLoading = true;
     this.commentService.getComments(this.comment._id).subscribe(
       (comments) => {
         this.nestedComments.set(comments);
         this.isLoading = false;
       },
       (error) => {
-        console.error("Erro ao carregar comentários:", error);
+        console.error("Erro ao carregar comentários aninhados:", error);
         this.isLoading = false;
       }
     );
   }
-
-
 
   isNestedComment(): boolean {
     if (this.comment.parent) {
@@ -66,9 +75,6 @@ export class CommentComponent {
     }
     return false
   }
-
-
-
 
   get getParentName() {
     console.log('Comment parent:', this.comment.parent?.user);

@@ -30,8 +30,8 @@
 </div>
 
 <article *ngIf="!isLoading"
-  class="relative block overflow-hidden border border-neutral-400 rounded-md mb-2 shadow-md border-l max-w-2xl target:bg-black">
-  <div [id]="this.comment._id" class="p-4 sm:p-6 lg:p-8" [class.pb-5]="isExpanded()">
+  class="relative block overflow-hidden border border-neutral-400 rounded-md mb-2 shadow-md border-l max-w-2xl ">
+  <div [id]="this.comment._id" class="p-4 sm:p-6 lg:p-8 hover:bg-gray-100" [class.pb-5]="isExpanded()">
     <div class="sm:flex sm:gap-4">
       <div class="hidden sm:block sm:shrink-0">
         <div *ngIf="userService.getUserFromStorage() as user">

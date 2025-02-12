@@ -99,9 +99,9 @@ export class CommentComponent {
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-        element.classList.add('bg-blue-300', 'transition-colors', 'duration-500');
+        element.classList.add('bg-blue-100', 'transition-colors', 'duration-500');
 
-        setTimeout(() => element.classList.remove('bg-blue-300'), 1500);
+        setTimeout(() => element.classList.remove('bg-blue-100'), 1500);
       } else {
         console.warn(`Elemento com ID ${elementId} não encontrado.`);
       }

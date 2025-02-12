@@ -31,7 +31,7 @@
 </div>
 
 <article *ngIf="!isLoading" [id]="this.comment._id"
-  class="relative block overflow-hidden border border-neutral-400 rounded-md mb-2 p-4 sm:p-6 lg:p-8 shadow-xl border-l max-w-2xl target:bg-black"
+  class="relative block overflow-hidden border border-neutral-400 rounded-md mb-2 p-4 sm:p-6 lg:p-8 shadow-md border-l max-w-2xl target:bg-black"
   [ngStyle]="getNestedStyles()">
 
   <div *ngIf="isNestedComment()" class="text-gray-500 text-sm mb-3 -mt-3 flex align-middle">

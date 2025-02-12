@@ -98,25 +98,6 @@ ng serve
 
 Os endpoints da API estarão disponíveis em: http://localhost:3000
 
-## Endpoints da API
-### Usuários
-POST /users Cria um novo usuário.
-
-GET /users/id Retorna os dados de um usuário pelo ID.
-
-### Comentários
-GET /comments Retorna todos os comentários.
-
-GET /comments/id Retorna um comentário específico pelo ID.
-
-POST /comments Cria um novo comentário.
-
-DELETE /comments/id Remove um comentário pelo ID.
-
-PUT /comments/id Atualiza um comentário pelo ID.
-
-Consulte a documentação do back-end para detalhes sobre payloads e respostas.
-
 ## Contribuição
 Contribuições são bem-vindas! Se você deseja colaborar, por favor, abra uma issue ou envie um pull request. Certifique-se de seguir as diretrizes de contribuição e teste suas alterações.
 
